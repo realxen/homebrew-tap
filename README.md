@@ -9,8 +9,7 @@ This repository hosts custom Homebrew formulae under `Formula/`.
 Example install flow:
 
 ```bash
-brew tap realxen/tap
-brew install cartograph
+brew install realxen/tap/cartograph
 ```
 
 ## Expected layout

@@ -22,6 +22,16 @@ Formula/
 
 ## Release automation
 
-Tool repositories can publish GitHub releases, then send a `repository_dispatch`
-event here so a workflow updates the matching formula with the new version and
-checksums.
+After publishing a GitHub release, run the `Update formula` workflow manually.
+It fetches the latest release from the target repository, downloads
+`checksums-sha256.txt`, and updates the formula automatically.
+
+You can also run the updater locally:
+
+```bash
+python3 ./scripts/update-formula.py cartograph realxen/cartograph
+```
+
+## Current formulae
+
+- `cartograph`

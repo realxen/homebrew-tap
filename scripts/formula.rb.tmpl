@@ -1,0 +1,36 @@
+class __FORMULA_CLASS__ < Formula
+  desc "__DESC__"
+  homepage "https://github.com/__REPOSITORY__"
+  url "https://github.com/__REPOSITORY__/releases/download/__TAG_NAME__/__FORMULA__-darwin-arm64"
+  version "__VERSION__"
+  sha256 "__DARWIN_ARM64_SHA__"
+  license "__LICENSE__"
+
+  on_macos do
+    if Hardware::CPU.arm?
+      url "https://github.com/__REPOSITORY__/releases/download/__TAG_NAME__/__FORMULA__-darwin-arm64"
+      sha256 "__DARWIN_ARM64_SHA__"
+    end
+__MACOS_INTEL_BLOCK__
+  end
+
+  on_linux do
+    if Hardware::CPU.intel?
+      url "https://github.com/__REPOSITORY__/releases/download/__TAG_NAME__/__FORMULA__-linux-amd64"
+      sha256 "__LINUX_AMD64_SHA__"
+    end
+
+    if Hardware::CPU.arm?
+      url "https://github.com/__REPOSITORY__/releases/download/__TAG_NAME__/__FORMULA__-linux-arm64"
+      sha256 "__LINUX_ARM64_SHA__"
+    end
+  end
+
+  def install
+    bin.install Dir["__FORMULA__*"].first => "__FORMULA__"
+  end
+
+  test do
+    assert_match version.to_s, shell_output("#{bin}/__FORMULA__ -v")
+  end
+end

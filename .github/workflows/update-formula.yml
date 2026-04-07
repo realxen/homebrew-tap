@@ -1,0 +1,38 @@
+name: Update formula
+
+on:
+  workflow_dispatch:
+    inputs:
+      formula:
+        description: Formula name
+        required: true
+        default: cartograph
+      repository:
+        description: GitHub repo in owner/name form
+        required: true
+        default: realxen/cartograph
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Update formula
+        run: python3 ./scripts/update-formula.py "${{ inputs.formula }}" "${{ inputs.repository }}"
+
+      - name: Commit formula update
+        run: |
+          if git diff --quiet -- Formula; then
+            echo "No formula changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Formula
+          git commit -m "Update formulae"
+          git push

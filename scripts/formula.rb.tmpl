@@ -43,6 +43,10 @@ __MACOS_INTEL_BLOCK__
     bash_completion.install buildpath/"__FORMULA__.bash" => "__FORMULA__"
   end
 
+  def post_install
+    system bin/"__FORMULA__", "skills", "install", "--upgrade"
+  end
+
   test do
     assert_match version.to_s, shell_output("#{bin}/__FORMULA__ -v")
     assert_match "complete -o default", shell_output("#{bin}/__FORMULA__ completion -c bash")

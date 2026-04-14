@@ -47,6 +47,10 @@ class Cartograph < Formula
     bash_completion.install buildpath/"cartograph.bash" => "cartograph"
   end
 
+  def post_install
+    system bin/"cartograph", "skills", "install", "--upgrade"
+  end
+
   test do
     assert_match version.to_s, shell_output("#{bin}/cartograph -v")
     assert_match "complete -o default", shell_output("#{bin}/cartograph completion -c bash")
